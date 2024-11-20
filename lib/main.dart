@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:horoscope_app/page/startpage.dart';
+import './page/startpage.dart'; // Import the new startpage.dart file
 
 void main() {
-  runApp(Startpage());
+  runApp(MyApp());
 }
 
-class Startpage extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: ZodiacPage(),
-          ),
-        ),
-      ),
+      home: Startpage(), // Set Startpage as the initial screen
     );
   }
 }

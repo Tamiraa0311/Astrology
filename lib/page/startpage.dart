@@ -1,62 +1,45 @@
 import 'package:flutter/material.dart';
 
-class ZodiacPage extends StatelessWidget {
+class Startpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 450,
-      height: 852,
-      child: Stack(
-        children: [
-          // Background Image
-          Container(
-            width: 450,
-            height: 852,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    "assets/stars_background.jpg"), // Ensure asset path is correct
-                fit: BoxFit.fill,
-              ),
-            ),
+    // Use MediaQuery to get screen width and height
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: Container(
+        // Set the background image dynamically
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image:
+                AssetImage('assets/stars_background.jpg'), // Path to your image
+            fit: BoxFit.cover, // This ensures the image covers the whole screen
+            alignment: Alignment.center, // Align the image to the center
           ),
-          // Title Text
-          Positioned(
-            top: 450, // Positioning from the top
-            left: 130, // Positioning from the left
-            child: Text(
+        ),
+        width: screenWidth, // Fill the screen width
+        height: screenHeight, // Fill the screen height
+        child: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Image.asset(
+              'assets/png-image.png',
+              width: 251,
+              height: 212,
+            ),
+
+            const SizedBox(height: 20), // Space between the image and the text
+            // Centered text
+            const Text(
               'Зурхай',
               style: TextStyle(
-                color: Color(0xFFEFF8FF),
                 fontSize: 24,
-                fontStyle: FontStyle.italic,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w700,
-                height: 1.2,
-                letterSpacing: 2.16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
-          ),
-          // Zodiac Symbols Container with positioned icon
-          Positioned(
-            top: 450, // Change this value to move the icon up or down
-            left: 70, // Change this value to move the icon left or right
-            child: Transform(
-              transform: Matrix4.identity()
-                ..rotateZ(-1.57), // Adjust rotation if needed
-              child: Container(
-                width: 251,
-                height: 212,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/png-image.png"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+          ]),
+        ),
       ),
     );
   }
