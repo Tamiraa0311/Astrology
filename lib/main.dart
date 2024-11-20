@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:horoscope_app/page/startpage.dart';
+import './page/startpage.dart'; // Import the new startpage.dart file
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
-  runApp(Startpage());
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.delayed(Duration(seconds: 5));
+  FlutterNativeSplash.remove();
+  runApp(MyApp());
 }
 
-class Startpage extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: ZodiacPage(),
-          ),
-        ),
-      ),
+      home: Startpage(), // Set Startpage as the initial screen
     );
   }
 }
