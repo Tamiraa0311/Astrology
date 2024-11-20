@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import './page/startpage.dart'; // Import the new startpage.dart file
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.delayed(Duration(seconds: 5));
+  FlutterNativeSplash.remove();
   runApp(MyApp());
 }
 
