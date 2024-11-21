@@ -24,6 +24,8 @@ flutter:
     - assets/text.png
     - assets/earth.png
     - assets/logo-image.png
+    - assets/arrow_back.png
+    - assets/quill_calendar.png
 
 flutter_native_splash:
   background_image: "assets/stars_background.jpg" # Set the background image for all devices
