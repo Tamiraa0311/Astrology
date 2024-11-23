@@ -4,6 +4,7 @@ import './page/loginPage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import './page/signupPage.dart'; // Import the new signupPage.dart file
 import './page/gender.dart'; // Import
+import './page/planetPage.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(), // Route to LoginPage
         '/register': (context) => SignupPage(), // Route to SignupPage
         '/gender': (context) => GenderPage(), // Route to GenderPage
+        '/planet': (context) => PlanetPage(), // Route to PlanetPage
       },
     );
   }

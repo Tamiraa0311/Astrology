@@ -45,7 +45,7 @@ class _GenderPageState extends State<GenderPage> {
                 onPressed: selectedGender != null
                     ? () {
                         // Perform action with the selected gender
-                        print("Selected Gender: $selectedGender");
+                        Navigator.pushNamed(context, '/planet');
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
