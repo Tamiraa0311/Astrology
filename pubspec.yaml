@@ -9,8 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.3
+  carousel_slider: ^4.0.0 # Correctly aligned dependency
+  curved_navigation_bar: ^1.0.6
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +27,20 @@ flutter:
     - assets/text.png
     - assets/earth.png
     - assets/logo-image.png
+    - assets/arrow_back.png
+    - assets/quill_calendar.png
+    - assets/sun.png
+    - assets/mars.png
+    - assets/sugar.png
+    - assets/saturn.png
+    - assets/sanchir.png
+    - assets/barhasbadi.png
+    - assets/moon.png
+    - assets/menu/today.png
+    - assets/menu/month.png
+    - assets/menu/hoslol.png
+    - assets/menu/orduud.png
+    - assets/menu/profile.png
 
 flutter_native_splash:
   background_image: "assets/stars_background.jpg" # Set the background image for all devices
@@ -32,4 +49,3 @@ flutter_native_splash:
   android_12:
     image: "assets/logo-image.png" # Center image for Android 12+
     background_image: "assets/stars_background.jpg" # Background image for Android 12+
-

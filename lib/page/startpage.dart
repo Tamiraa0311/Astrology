@@ -50,7 +50,7 @@ class Startpage extends StatelessWidget {
               width: 200, // Set width of the button
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/next');
+                  Navigator.pushNamed(context, '/login');
                 },
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(
@@ -76,5 +76,5 @@ class Startpage extends StatelessWidget {
         ],
       ),
     );
-  }
+  } // End of build method
 }
