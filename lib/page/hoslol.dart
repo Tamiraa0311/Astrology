@@ -33,18 +33,66 @@ class _MatchPageState extends State<MatchPage> {
   Zodiac? selectedZodiac2;
 
   final List<Zodiac> zodiacs = [
-    Zodiac(name: 'Хонь', imagePath: 'assets/aries.png', compatibility: 'Хонь болон үхэр маш сайн таардаг. Хамгийн шийдвэртэй хүчтэй, найдвартай холбоо. Авууштай нь хонь өөрийн үхрээ хөдлөх л юм бол уяж зогсоож амждаг. Хонь үнэнч, шударга, тусархуу байсан ч энэ нь ховор тохиолдол. Хонь буцалж бургилж байхад үхэр тайван суудаг. Энэ нь хонинд хамгийн сайн эм болж өгдөг. Сэтгэл санааны нийлэмжээрээ учирдаг хосууд. Үхрийн өөрийнхөөрөө зүтгэдэг зан, уян биш байдал эмэгтэй хонийг бухимдуулна. Тэдний бэлгийн харьцаанд ямар ч асуудал байхгүй. Үхэр хонь 30 нас хүрснээсээ хойш учирвал илүү таатай.'),
-    Zodiac(name: 'Үхэр', imagePath: 'assets/taurus.png', compatibility: 'Үхэр болон ихэр тохиромж багатай. ...'),
-    Zodiac(name: 'Ихэр', imagePath: 'assets/gemini.png', compatibility: 'Ихэр болон мэлхий дундаж таарамжтай. ...'),
-    Zodiac(name: 'Мэлхий', imagePath: 'assets/cancer.png', compatibility: 'Мэлхий болон арслан гайхалтай зохицдог. ...'),
-    Zodiac(name: 'Арслан', imagePath: 'assets/leo.png', compatibility: 'Арслан болон охин таардаггүй. ...'),
-    Zodiac(name: 'Охин', imagePath: 'assets/virgo.png', compatibility: 'Охин болон жинлүүр эв найртай. ...'),
-    Zodiac(name: 'Жинлүүр', imagePath: 'assets/libra.png', compatibility: 'Жинлүүр болон хилэнц дундаж. ...'),
-    Zodiac(name: 'Хилэнц', imagePath: 'assets/scorpio.png', compatibility: 'Хилэнц болон нум сайн зохицно. ...'),
-    Zodiac(name: 'Нум', imagePath: 'assets/sagittarius.png', compatibility: 'Нум болон матар сайхан хослол. ...'),
-    Zodiac(name: 'Матар', imagePath: 'assets/capricorn.png', compatibility: 'Матар болон хумх таардаггүй. ...'),
-    Zodiac(name: 'Хумх', imagePath: 'assets/aquarius.png', compatibility: 'Хумх болон загас гайхалтай хос. ...'),
-    Zodiac(name: 'Загас', imagePath: 'assets/pisces.png', compatibility: 'Загас болон хонь маш сайн таарна. ...'),
+    Zodiac(
+      name: 'Хонь',
+      imagePath: 'assets/aries.png',
+      compatibility: 'Хонь болон үхэр маш сайн таардаг. Хамгийн шийдвэртэй хүчтэй, найдвартай холбоо. Авууштай нь хонь өөрийн үхрээ хөдлөх л юм бол уяж зогсоож амждаг. Хонь үнэнч, шударга, тусархуу байсан ч энэ нь ховор тохиолдол. Хонь буцалж бургилж байхад үхэр тайван суудаг. Энэ нь хонинд хамгийн сайн эм болж өгдөг. Сэтгэл санааны нийлэмжээрээ учирдаг хосууд. Үхрийн өөрийнхөөрөө зүтгэдэг зан, уян биш байдал эмэгтэй хонийг бухимдуулна. Тэдний бэлгийн харьцаанд ямар ч асуудал байхгүй. Үхэр хонь 30 нас хүрснээсээ хойш учирвал илүү таатай.',
+    ),
+    Zodiac(
+      name: 'Үхэр',
+      imagePath: 'assets/taurus.png',
+      compatibility: 'Үхэр болон ихэр тохиромж багатай.',
+    ),
+    Zodiac(
+      name: 'Ихэр',
+      imagePath: 'assets/gemini.png',
+      compatibility: 'Ихэр болон мэлхий нийтлэг сонирхол багатай.',
+    ),
+    Zodiac(
+      name: 'Мэлхий',
+      imagePath: 'assets/cancer.png',
+      compatibility: 'Мэлхий болон арслан хоорондоо ойлголцох нь амархан.',
+    ),
+    Zodiac(
+      name: 'Арслан',
+      imagePath: 'assets/leo.png',
+      compatibility: 'Арслан болон охин найдвартай холбоо үүсгэдэг.',
+    ),
+    Zodiac(
+      name: 'Охин',
+      imagePath: 'assets/virgo.png',
+      compatibility: 'Охин болон жинлүүр хүчтэй холбоо бий болгодог.',
+    ),
+    Zodiac(
+      name: 'Жинлүүр',
+      imagePath: 'assets/libra.png',
+      compatibility: 'Жинлүүр болон хилэнц сайн хос байдаг.',
+    ),
+    Zodiac(
+      name: 'Хилэнц',
+      imagePath: 'assets/scorpio.png',
+      compatibility: 'Хилэнц болон нум хоорондоо анхандаа сайн.',
+    ),
+    Zodiac(
+      name: 'Нум',
+      imagePath: 'assets/sagittarius.png',
+      compatibility: 'Нум болон матар хосуудад үл ойлголцол гарах магадлалтай.',
+    ),
+    Zodiac(
+      name: 'Матар',
+      imagePath: 'assets/capricorn.png',
+      compatibility: 'Матар болон хумх хамтдаа тайван харилцаатай.',
+    ),
+    Zodiac(
+      name: 'Хумх',
+      imagePath: 'assets/aquarius.png',
+      compatibility: 'Хумх болон загас хоорондоо зохицохгүй.',
+    ),
+    Zodiac(
+      name: 'Загас',
+      imagePath: 'assets/pisces.png',
+      compatibility: 'Загас болон хонь гайхалтай хайр сэтгэлийн холбоо үүсгэдэг.',
+    ),
   ];
 
   void selectZodiac(Zodiac zodiac) {
@@ -143,7 +191,7 @@ class _MatchPageState extends State<MatchPage> {
                       const SizedBox(height: 8),
                       Text(
                         zodiac.name,
-                        style: const TextStyle(color: Color(0xFFFFFFFF), fontSize: 14),
+                        style: const TextStyle(color: Color(0xFFF4B0F9), fontSize: 14), // Ягаан өнгө
                       ),
                     ],
                   ),
@@ -181,7 +229,7 @@ class CompatibilityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Таарамжийн мэдээлэл'),
+        title: const Text('Зохицол'),
         backgroundColor: const Color(0xFFF4B0F9),
       ),
       body: Padding(
@@ -190,17 +238,17 @@ class CompatibilityPage extends StatelessWidget {
           children: [
             Text(
               '${zodiac1.name} болон ${zodiac2.name}',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFF4B0F9)), // Ягаан өнгө
             ),
             const SizedBox(height: 16),
             Text(
               zodiac1.compatibility,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Color(0xFFF4B0F9)), // Ягаан өнгө
             ),
             const SizedBox(height: 16),
             Text(
               zodiac2.compatibility,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Color(0xFFF4B0F9)), // Ягаан өнгө
             ),
           ],
         ),
