@@ -39,34 +39,22 @@ class _SignupPageState extends State<SignupPage> {
       };
 
       try {
-        // Make the POST request to the backend API
         final response = await http.post(
           Uri.parse(apiUrl),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json'},
           body: json.encode(userData),
         );
 
-        // Handle the response
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+
         if (response.statusCode == 201) {
-          // Successfully registered
           final data = json.decode(response.body);
-
-          // Check the correct key in the response (adjust 'message' if needed)
-          if (data.containsKey('message')) {
-            _showDialog('Бүртгүүлсэн', data['message']);
-          } else {
-            // If there's no message, you can show a default success message
-            _showDialog('Бүртгүүлсэн', 'Амжилттай бүртгэгдлээ!');
-          }
-
+          _showDialog('Бүртгүүлсэн', data['message']);
           Future.delayed(const Duration(seconds: 1), () {
-            Navigator.pop(context,
-                '/login'); // Pop the signup page off the stack (go back to the login page)
+            Navigator.pop(context, '/login');
           });
         } else {
-          // Show error message from the API
           final errorData = json.decode(response.body);
           _showDialog(
               'Алдаа', errorData['message'] ?? 'Бүртгэл хийхэд алдаа гарлаа.');
@@ -75,7 +63,6 @@ class _SignupPageState extends State<SignupPage> {
         _showDialog('Алдаа', 'Серверт алдаа гарлаа. Дахин оролдоно уу!');
       }
     } else {
-      // Show an error if gender is not selected
       _showDialog('Алдаа', 'Та хүйсээ сонгоно уу!');
     }
   }

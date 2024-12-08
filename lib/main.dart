@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
         '/register': (context) => SignupPage(), // Route to SignupPage
         '/planet': (context) => PlanetPage(), // Route to PlanetPage
         '/today': (context) => MyCustomUI(), // Route to MyCustomUI
-        '/orduud': (context) => orduud.ZodiacApp(), // Route to ZodiacApp
         '/profile': (context) => ProfilePage(), // Route to ProfilePaget
       },
     );

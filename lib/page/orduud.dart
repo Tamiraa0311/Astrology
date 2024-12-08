@@ -1,20 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart'; // MongoDB package
-
-// MongoDB connection setup
-Future<List<Map<String, dynamic>>> fetchZodiacs() async {
-  final db = await Db.create("mongodb://localhost:27017/zodiac_db");
-  await db.open();
-  var collection = db.collection('zodiacs');
-  var zodiacs = await collection.find().toList();
-  await db.close();
-  return zodiacs;
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ZodiacApp());
-}
 
 // Main Zodiac App
 class ZodiacApp extends StatelessWidget {
@@ -34,83 +18,155 @@ class ZodiacApp extends StatelessWidget {
   }
 }
 
-// Zodiac Main Page
-class ZodiacPage extends StatefulWidget {
-  const ZodiacPage({super.key});
-
-  @override
-  _ZodiacPageState createState() => _ZodiacPageState();
-}
-
-class _ZodiacPageState extends State<ZodiacPage> {
-  late Future<List<Map<String, dynamic>>> _zodiacs;
-
-  @override
-  void initState() {
-    super.initState();
-    _zodiacs = fetchZodiacs(); // Fetch data when the page loads
-  }
+// Bottom Navigation Bar
+class CustomBottomNav extends StatelessWidget {
+  const CustomBottomNav({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<NavItem> items = [
+      NavItem(
+          imagePath: 'assets/today.png',
+          title: 'Өнөөдөр',
+          page: const TodayPage()),
+      NavItem(
+          imagePath: 'assets/calendar.png',
+          title: 'Сар',
+          page: const CalendarPage()),
+      NavItem(
+          imagePath: 'assets/match.png',
+          title: 'Хослол',
+          page: const MatchPage()),
+      NavItem(
+          imagePath: 'assets/zodiac.png',
+          title: 'Ордууд',
+          page: const ZodiacPage()),
+      NavItem(
+          imagePath: 'assets/profile.png',
+          title: 'Профайл',
+          page: const ProfilePage()),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(
+        color: Color(0xFFF4B0F9),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: items.map((item) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => item.page),
+              );
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundColor: const Color(0xFFF4B0F9),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Image.asset(item.imagePath, fit: BoxFit.contain),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  item.title,
+                  style:
+                      const TextStyle(color: Color(0xFFF4B0F9), fontSize: 14),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+// Navigation Item Model
+class NavItem {
+  final String imagePath;
+  final String title;
+  final Widget page;
+
+  NavItem({required this.imagePath, required this.title, required this.page});
+}
+
+// Zodiac Model
+class Zodiac {
+  final String imagePath;
+  final String name;
+  final String dateRange;
+  final String description;
+
+  Zodiac({
+    required this.imagePath,
+    required this.name,
+    required this.dateRange,
+    required this.description,
+  });
+}
+
+// Zodiac Main Page
+class ZodiacPage extends StatelessWidget {
+  const ZodiacPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Zodiac> zodiacs = [
+      Zodiac(
+        imagePath: 'assets/aries.png',
+        name: 'Хонь',
+        dateRange: '3/21 - 4/19',
+        description:
+            'Хонь – “Гал” махбодитой ордуудаас хамгийн гал цогтой нь юм.',
+      ),
+      Zodiac(
+        imagePath: 'assets/taurus.png',
+        name: 'Үхэр',
+        dateRange: '4/20 - 5/20',
+        description:
+            'Үхрийн ордод төрсөн хүмүүс ерөнхийдөө дуугуй, бие даасан, хариуцлагатай.',
+      ),
+      // Add more Zodiac signs here
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ордууд'),
         backgroundColor: const Color(0xFFF4B0F9),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _zodiacs,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No data available.'));
-          } else {
-            // Data fetched successfully, show zodiac signs
-            var zodiacs = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                ),
-                itemCount: zodiacs.length,
-                itemBuilder: (context, index) {
-                  var zodiac = zodiacs[index];
-                  return ZodiacTile(
-                    imagePath: zodiac['imagePath'] ?? '',
-                    name: zodiac['name'] ?? 'Unknown',
-                    dateRange: zodiac['dateRange'] ?? '',
-                    description: zodiac['description'] ?? '',
-                  );
-                },
-              ),
-            );
-          }
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
+          ),
+          itemCount: zodiacs.length,
+          itemBuilder: (context, index) {
+            return ZodiacTile(zodiac: zodiacs[index]);
+          },
+        ),
       ),
+      bottomNavigationBar: const CustomBottomNav(),
     );
   }
 }
 
 // Zodiac Tile
 class ZodiacTile extends StatelessWidget {
-  final String imagePath;
-  final String name;
-  final String dateRange;
-  final String description;
+  final Zodiac zodiac;
 
-  const ZodiacTile({
-    required this.imagePath,
-    required this.name,
-    required this.dateRange,
-    required this.description,
-    super.key,
-  });
+  const ZodiacTile({required this.zodiac, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -119,13 +175,7 @@ class ZodiacTile extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ZodiacDetailPage(
-              imagePath: imagePath,
-              name: name,
-              dateRange: dateRange,
-              description: description,
-            ),
-          ),
+              builder: (context) => ZodiacDetailPage(zodiac: zodiac)),
         );
       },
       child: Column(
@@ -138,13 +188,13 @@ class ZodiacTile extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Image.network(imagePath, fit: BoxFit.contain),
+                child: Image.asset(zodiac.imagePath, fit: BoxFit.contain),
               ),
             ),
           ),
           const SizedBox(height: 8.0),
           Text(
-            name,
+            zodiac.name,
             style: const TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.bold,
@@ -159,45 +209,89 @@ class ZodiacTile extends StatelessWidget {
 
 // Zodiac Detail Page
 class ZodiacDetailPage extends StatelessWidget {
-  final String imagePath;
-  final String name;
-  final String dateRange;
-  final String description;
+  final Zodiac zodiac;
 
-  const ZodiacDetailPage({
-    required this.imagePath,
-    required this.name,
-    required this.dateRange,
-    required this.description,
-    super.key,
-  });
+  const ZodiacDetailPage({required this.zodiac, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(zodiac.name),
         backgroundColor: const Color(0xFFF4B0F9),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Image.network(imagePath),
+            Image.asset(zodiac.imagePath),
             const SizedBox(height: 16.0),
             Text(
-              dateRange,
+              zodiac.dateRange,
               style: const TextStyle(fontSize: 18.0, color: Color(0xFFF4B0F9)),
             ),
             const SizedBox(height: 16.0),
             Text(
-              description,
+              zodiac.description,
               style: const TextStyle(fontSize: 16.0, color: Color(0xFFF4B0F9)),
               textAlign: TextAlign.center,
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+// Other Pages
+class TodayPage extends StatelessWidget {
+  const TodayPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Өнөөдөр')),
+      body: const Center(child: Text('Өнөөдрийн мэдээлэл.')),
+      bottomNavigationBar: const CustomBottomNav(),
+    );
+  }
+}
+
+class CalendarPage extends StatelessWidget {
+  const CalendarPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Сар')),
+      body: const Center(child: Text('Сарын мэдээлэл.')),
+      bottomNavigationBar: const CustomBottomNav(),
+    );
+  }
+}
+
+class MatchPage extends StatelessWidget {
+  const MatchPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Хослол')),
+      body: const Center(child: Text('Хослолын мэдээлэл.')),
+      bottomNavigationBar: const CustomBottomNav(),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Профайл')),
+      body: const Center(child: Text('Профайл хуудас.')),
+      bottomNavigationBar: const CustomBottomNav(),
     );
   }
 }

@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     try {
-      // Example API URL - replace with your actual API endpoint
       final response = await http.post(
         Uri.parse('http://192.168.1.10:3000/login'),
         headers: {'Content-Type': 'application/json'},
@@ -36,16 +35,11 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (response.statusCode == 200) {
-        // Assuming successful login
         final data = json.decode(response.body);
-        if (data['message'] == 'Login successful') {
-          // Redirect to home or dashboard page after login
-          print('' + data['message']);
-          Navigator.pushReplacementNamed(context, '/today');
-        } else {
-          // Show error message from API
-          _showDialog('Алдаа', data['message'] ?? 'Нэвтрэхэд алдаа гарлаа.');
-        }
+        Navigator.pushReplacementNamed(context, '/today');
+      } else {
+        final errorData = json.decode(response.body);
+        _showDialog('Алдаа', errorData['message'] ?? 'Нэвтрэхэд алдаа гарлаа.');
       }
     } catch (e) {
       _showDialog('Алдаа', 'Интернэт холболтгүй байна. Дахин оролдоно уу.');
