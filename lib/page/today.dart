@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
+import '../navbar/navBar.dart'; // Import the navbar file
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -24,41 +21,36 @@ class MyCustomUI extends StatefulWidget {
 
 class _MyCustomUIState extends State<MyCustomUI> {
   String selectedTab = "Өнөөдөр"; // Default tab is "Өнөөдөр"
+  int _selectedIndex = 0; // Track selected index for nav bar
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0E21),
+      backgroundColor: const Color(0xFF0A0E21),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Section with "Jargal" inside a box of size 239x59
+            // Header Section
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: Container(
-                width: 239, // Fixed width
-                height: 59, // Fixed height
-                padding: EdgeInsets.only(
-                    left: 0,
-                    right: 0,
-                    top: 16,
-                    bottom: 16), // No padding on the front side (left)
+                width: 120,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8B9FF), // Background color of the box
+                  color: const Color(0xFFF8B9FF),
                   borderRadius: BorderRadius.only(
-                    topRight:
-                        Radius.circular(12), // Only left side has border radius
+                    topRight: Radius.circular(12),
                     bottomRight: Radius.circular(12),
                   ),
                 ),
-                child: Center(
-                  // Center the text within the box
+                child: const Center(
                   child: Text(
                     "Jargal",
                     style: TextStyle(
-                      color: Colors.white, // Text color inside the box
-                      fontSize: 24, // Adjusted font size for better fit
+                      color: Color(0xFF0A0E21),
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -74,16 +66,15 @@ class _MyCustomUIState extends State<MyCustomUI> {
                   _buildTabItem("Өчигдөр"),
                   _buildTabItem("Өнөөдөр"),
                   _buildTabItem("Маргааш"),
-                  _buildTabItem("Профайл"), // Added Profile Tab
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 10),
             // Main Content
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: _buildContent(),
                 ),
               ),
@@ -91,8 +82,23 @@ class _MyCustomUIState extends State<MyCustomUI> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
+      bottomNavigationBar: MyNavBarPage(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Handle page navigation here
+    // For example:
+    // if (index == 0) {
+    //   Navigator.pushNamed(context, '/today');
+    // }
   }
 
   Widget _buildTabItem(String label) {
@@ -106,7 +112,7 @@ class _MyCustomUIState extends State<MyCustomUI> {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 14,
           color: isActive ? const Color(0xFFF8B9FF) : Colors.grey,
           fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
         ),
@@ -117,13 +123,11 @@ class _MyCustomUIState extends State<MyCustomUI> {
   Widget _buildContent() {
     if (selectedTab == "Өнөөдөр") {
       return _buildTodayContent();
-    } else if (selectedTab == "Профайл") {
-      return _buildProfileContent(); // Profile Content
     } else {
       return Center(
         child: Text(
           "$selectedTab цэсний агуулга",
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: const TextStyle(color: Colors.white, fontSize: 14),
         ),
       );
     }
@@ -135,46 +139,77 @@ class _MyCustomUIState extends State<MyCustomUI> {
       children: [
         // Main Message Box
         Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color(0xFFF8B9FF),
+            color: const Color(0xFFF8B9FF),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(
+          child: const Text(
             "Амьдралын зам үргэлж толигор байдаггүй ч бэрхшээл бүрийг давж доодох хүч, тэсвэрээ байнга танд байгааг санаарай.",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: Color(0xFF0A0E21),
             ),
           ),
         ),
-        SizedBox(height: 20),
-        // Daily Plan Section
-        Text(
-          "Өдрийн төлөв",
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+        const SizedBox(height: 12),
+        // Daily Plan Section with adjusted padding for title
+        Padding(
+          padding: const EdgeInsets.only(top: 8), // Move title down
+          child: const Text(
+            "Өдрийн төлөв",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        _buildSliderRow("assets/money.png", "85", Colors.yellow),
-        _buildSliderRow("assets/work.png", "70", Colors.orange),
-        _buildSliderRow("assets/health.png", "90", Colors.pinkAccent),
-        _buildSliderRow("assets/beauty.png", "70", Colors.orange),
-        SizedBox(height: 20),
-        // Other Details
+        const SizedBox(height: 5),
+        // Sliders Grid
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 2, // Adjust aspect ratio for compact layout
+          children: [
+            _buildCustomSlider(
+              title: "Мөнгө",
+              value: 50,
+              color: Colors.yellow,
+            ),
+            _buildCustomSlider(
+              title: "Ажил",
+              value: 70,
+              color: Colors.orange,
+            ),
+            _buildCustomSlider(
+              title: "Хайр дурлал",
+              value: 90,
+              color: Colors.pinkAccent,
+            ),
+            _buildCustomSlider(
+              title: "Гэр бүл",
+              value: 90,
+              color: Colors.cyan,
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        // Lucky Numbers Section
         Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Color(0xFFF8B9FF),
+            color: const Color(0xFFF8B9FF),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildDetailItem("Азын тоо:", "15"),
-              SizedBox(height: 10),
+              const SizedBox(height: 8),
               _buildDetailItem("Азтай цаг:", "12:40-17:40"),
             ],
           ),
@@ -183,40 +218,68 @@ class _MyCustomUIState extends State<MyCustomUI> {
     );
   }
 
-  Widget _buildSliderRow(String iconPath, String value, Color color) {
-    double parsedValue = double.tryParse(value) ?? 0;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Row(
-        children: [
-          Image.asset(
-            iconPath,
-            width: 30,
-            height: 30,
-          ),
-          SizedBox(width: 10),
-          Text(
-            value,
-            style: TextStyle(fontSize: 18, color: Colors.white),
-          ),
-          SizedBox(width: 10),
-          Expanded(
-            child: Slider(
-              value: parsedValue,
-              min: 0,
-              max: 100,
-              activeColor: color,
-              inactiveColor: color.withOpacity(0.3),
-              onChanged: (val) {
-                setState(() {
-                  // Update the value dynamically
-                  parsedValue = val;
-                });
-              },
+  Widget _buildCustomSlider({
+    required String title,
+    required int value,
+    required Color color,
+  }) {
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Number Box
+            Container(
+              width: 40, // Smaller width
+              height: 40, // Smaller height
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  value.toString(),
+                  style: const TextStyle(
+                    fontSize: 14, // Smaller font
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(width: 6), // Reduced spacing
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10), // Adjusted spacing
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 12, // Smaller title font
+                      color: Colors.white,
+                    ),
+                  ),
+                  SliderTheme(
+                    data: SliderThemeData(
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4),
+                      trackHeight: 3, // Slimmer track
+                    ),
+                    child: Slider(
+                      value: value.toDouble(),
+                      min: 0,
+                      max: 100,
+                      activeColor: color,
+                      inactiveColor: color.withOpacity(0.4),
+                      onChanged: (newValue) {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -226,89 +289,17 @@ class _MyCustomUIState extends State<MyCustomUI> {
       children: [
         Text(
           label,
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: const TextStyle(fontSize: 14, color: Colors.white),
         ),
         Text(
           value,
-          style: TextStyle(
-            fontSize: 16,
+          style: const TextStyle(
+            fontSize: 15,
             color: Colors.pinkAccent,
             fontWeight: FontWeight.bold,
           ),
         ),
       ],
-    );
-  }
-
-  // Profile Content
-  Widget _buildProfileContent() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('assets/profile.png'),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Тамирын Жаргал',
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Age: 28\nHobbies: Reading, Gaming, Music\nLocation: Ulaanbaatar',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white70,
-              fontWeight: FontWeight.normal,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNavBar() {
-    final navItems = [
-      {'iconPath': 'assets/menu/today.png', 'label': 'Өнөөдөр'},
-      {'iconPath': 'assets/menu/month.png', 'label': 'Сар'},
-      {'iconPath': 'assets/menu/orduud.png', 'label': 'Ордууд'},
-      {'iconPath': 'assets/menu/hoslol.png', 'label': 'Хослол'},
-      {
-        'iconPath': 'assets/menu/profile.png',
-        'label': 'Профайл'
-      }, // Profile Item
-    ];
-
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        color: Color(0xFFF8B9FF),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: navItems
-            .map((item) => IconButton(
-                  icon: Image.asset(
-                    item['iconPath']!,
-                    width: 30,
-                    height: 30,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      selectedTab = item['label']!;
-                    });
-                  },
-                ))
-            .toList(),
-      ),
     );
   }
 }

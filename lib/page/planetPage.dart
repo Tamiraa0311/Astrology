@@ -9,7 +9,7 @@ class PlanetPage extends StatefulWidget {
 }
 
 class _PlanetPageState extends State<PlanetPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   // Default selected planet
   String selectedPlanet = '';

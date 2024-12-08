@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:horoscope_app/page/orduud.dart' as orduud;
 import './page/startpage.dart'; // Import the new startpage.dart file
 import './page/loginPage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import './page/signupPage.dart'; // Import the new signupPage.dart file
-import './page/gender.dart'; // Import
 import './page/planetPage.dart';
+import './page/today.dart'; // Import the new today.dart file
+import './page/profile.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +28,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Startpage(),
         '/login': (context) => LoginPage(), // Route to LoginPage
         '/register': (context) => SignupPage(), // Route to SignupPage
-        '/gender': (context) => GenderPage(), // Route to GenderPage
         '/planet': (context) => PlanetPage(), // Route to PlanetPage
+        '/today': (context) => MyCustomUI(), // Route to MyCustomUI
+        '/orduud': (context) => orduud.ZodiacApp(), // Route to ZodiacApp
+        '/profile': (context) => ProfilePage(), // Route to ProfilePaget
       },
     );
   }
