@@ -21,6 +21,21 @@ const planetSchema = new mongoose.Schema({
     image: String,
     description: String
 });
+app.get('/api/username', async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.query.name });
+// Fetch the first user from the database
+        if (user) {
+            res.json({ username: user.name });
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        console.error('Error occurred:', err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
 
 // Create model using the schema
 const Planet = mongoose.model('Planet', planetSchema, 'day');  // Use 'day' collection
@@ -29,6 +44,7 @@ app.use(cors()); // Enable CORS
 app.use(express.json()); // Enable JSON parsing
 
 
+  
 app.post('/login', async (req, res) => {
     const { phone, password } = req.body;
   
