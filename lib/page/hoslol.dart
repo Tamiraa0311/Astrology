@@ -1,254 +1,189 @@
 import 'package:flutter/material.dart';
+import 'navBar.dart';
 
-void main() {
-  runApp(const ZodiacApp());
-}
-
-class ZodiacApp extends StatelessWidget {
-  const ZodiacApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Зурхайн хослол',
-      theme: ThemeData(
-        useMaterial3: false, // Material 3-г идэвхгүй болгоно
-        scaffoldBackgroundColor: const Color(0xFF0C0E2F),
-      ),
-      home: const MatchPage(),
-    );
-  }
-}
-
-// Match Page
-class MatchPage extends StatefulWidget {
-  const MatchPage({super.key});
-
-  @override
-  State<MatchPage> createState() => _MatchPageState();
-}
-
-class _MatchPageState extends State<MatchPage> {
-  Zodiac? selectedZodiac1;
-  Zodiac? selectedZodiac2;
-
-  final List<Zodiac> zodiacs = [
-    Zodiac(
-      name: 'Хонь',
-      imagePath: 'assets/aries.png',
-      compatibility: 'Хонь болон үхэр маш сайн таардаг. Хамгийн шийдвэртэй хүчтэй, найдвартай холбоо. Авууштай нь хонь өөрийн үхрээ хөдлөх л юм бол уяж зогсоож амждаг. Хонь үнэнч, шударга, тусархуу байсан ч энэ нь ховор тохиолдол. Хонь буцалж бургилж байхад үхэр тайван суудаг. Энэ нь хонинд хамгийн сайн эм болж өгдөг. Сэтгэл санааны нийлэмжээрээ учирдаг хосууд. Үхрийн өөрийнхөөрөө зүтгэдэг зан, уян биш байдал эмэгтэй хонийг бухимдуулна. Тэдний бэлгийн харьцаанд ямар ч асуудал байхгүй. Үхэр хонь 30 нас хүрснээсээ хойш учирвал илүү таатай.',
-    ),
-    Zodiac(
-      name: 'Үхэр',
-      imagePath: 'assets/taurus.png',
-      compatibility: 'Үхэр болон ихэр тохиромж багатай.',
-    ),
-    Zodiac(
-      name: 'Ихэр',
-      imagePath: 'assets/gemini.png',
-      compatibility: 'Ихэр болон мэлхий нийтлэг сонирхол багатай.',
-    ),
-    Zodiac(
-      name: 'Мэлхий',
-      imagePath: 'assets/cancer.png',
-      compatibility: 'Мэлхий болон арслан хоорондоо ойлголцох нь амархан.',
-    ),
-    Zodiac(
-      name: 'Арслан',
-      imagePath: 'assets/leo.png',
-      compatibility: 'Арслан болон охин найдвартай холбоо үүсгэдэг.',
-    ),
-    Zodiac(
-      name: 'Охин',
-      imagePath: 'assets/virgo.png',
-      compatibility: 'Охин болон жинлүүр хүчтэй холбоо бий болгодог.',
-    ),
-    Zodiac(
-      name: 'Жинлүүр',
-      imagePath: 'assets/libra.png',
-      compatibility: 'Жинлүүр болон хилэнц сайн хос байдаг.',
-    ),
-    Zodiac(
-      name: 'Хилэнц',
-      imagePath: 'assets/scorpio.png',
-      compatibility: 'Хилэнц болон нум хоорондоо анхандаа сайн.',
-    ),
-    Zodiac(
-      name: 'Нум',
-      imagePath: 'assets/sagittarius.png',
-      compatibility: 'Нум болон матар хосуудад үл ойлголцол гарах магадлалтай.',
-    ),
-    Zodiac(
-      name: 'Матар',
-      imagePath: 'assets/capricorn.png',
-      compatibility: 'Матар болон хумх хамтдаа тайван харилцаатай.',
-    ),
-    Zodiac(
-      name: 'Хумх',
-      imagePath: 'assets/aquarius.png',
-      compatibility: 'Хумх болон загас хоорондоо зохицохгүй.',
-    ),
-    Zodiac(
-      name: 'Загас',
-      imagePath: 'assets/pisces.png',
-      compatibility: 'Загас болон хонь гайхалтай хайр сэтгэлийн холбоо үүсгэдэг.',
-    ),
-  ];
-
-  void selectZodiac(Zodiac zodiac) {
-    setState(() {
-      if (selectedZodiac1 == null) {
-        selectedZodiac1 = zodiac;
-      } else if (selectedZodiac2 == null && selectedZodiac1 != zodiac) {
-        selectedZodiac2 = zodiac;
-      } else if (selectedZodiac1 == zodiac) {
-        selectedZodiac1 = null;
-      } else if (selectedZodiac2 == zodiac) {
-        selectedZodiac2 = null;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Зурхайн Хослол'),
-        backgroundColor: const Color(0xFFF4B0F9),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          // Display selected Zodiac images
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundColor: const Color(0xFFF4B0F9),
-                child: selectedZodiac1 != null
-                    ? Image.asset(selectedZodiac1!.imagePath, fit: BoxFit.contain)
-                    : null,
-              ),
-              const SizedBox(width: 16),
-              const Text('+', style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 24)),
-              const SizedBox(width: 16),
-              CircleAvatar(
-                radius: 40,
-                backgroundColor: const Color(0xFFF4B0F9),
-                child: selectedZodiac2 != null
-                    ? Image.asset(selectedZodiac2!.imagePath, fit: BoxFit.contain)
-                    : null,
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          // Button to show compatibility
-          ElevatedButton(
-            onPressed: selectedZodiac1 != null && selectedZodiac2 != null
-                ? () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CompatibilityPage(
-                          zodiac1: selectedZodiac1!,
-                          zodiac2: selectedZodiac2!,
-                        ),
-                      ),
-                    );
-                  }
-                : null,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFF4B0F9),
-              foregroundColor: const Color(0xFFFFFFFF),
-            ),
-            child: const Text('Хослол'),
-          ),
-          const SizedBox(height: 16),
-          // Zodiac Selector Grid
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-              ),
-              itemCount: zodiacs.length,
-              itemBuilder: (context, index) {
-                final zodiac = zodiacs[index];
-                return GestureDetector(
-                  onTap: () => selectZodiac(zodiac),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: selectedZodiac1 == zodiac || selectedZodiac2 == zodiac
-                            ? const Color(0xFFF4B0F9)
-                            : const Color(0xFF0C0E2F),
-                        child: Image.asset(zodiac.imagePath, fit: BoxFit.contain),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        zodiac.name,
-                        style: const TextStyle(color: Color(0xFFF4B0F9), fontSize: 14), // Ягаан өнгө
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Zodiac Model
 class Zodiac {
-  final String name;
   final String imagePath;
-  final String compatibility;
+  final String name;
+  final String dateRange;
+  final String description;
 
   Zodiac({
-    required this.name,
     required this.imagePath,
-    required this.compatibility,
+    required this.name,
+    required this.dateRange,
+    required this.description,
   });
 }
 
-// Compatibility Page
-class CompatibilityPage extends StatelessWidget {
-  final Zodiac zodiac1;
-  final Zodiac zodiac2;
+class ZodiacPage extends StatelessWidget {
+  const ZodiacPage({super.key});
 
-  const CompatibilityPage({super.key, required this.zodiac1, required this.zodiac2});
+  @override
+  Widget build(BuildContext context) {
+    final List<Zodiac> zodiacs = [
+  Zodiac(
+    imagePath: 'assets/aries.png',
+    name: 'Хонь',
+    dateRange: '3/21 - 4/19',
+    description: 'Хонь – “Гал” махбодитой ордуудаас хамгийн гал цогтой нь юм.',
+  ),
+  Zodiac(
+    imagePath: 'assets/taurus.png',
+    name: 'Үхэр',
+    dateRange: '4/20 - 5/20',
+    description: 'Үхрийн ордод төрсөн хүмүүс ерөнхийдөө дуугуй, бие даасан, хариуцлагатай.',
+  ),
+  Zodiac(
+    imagePath: 'assets/gemini.png',
+    name: 'Хамхи',
+    dateRange: '5/21 - 6/20',
+    description: 'Хамхины ордод төрсөн хүмүүс ухаалаг, зохион байгуулалттай, сэтгэл санааны өөрчлөлттэй байдаг.',
+  ),
+  Zodiac(
+    imagePath: 'assets/cancer.png',
+    name: 'Мэлхий',
+    dateRange: '6/21 - 7/22',
+    description: 'Мэлхийн ордод төрсөн хүмүүс халамжтай, сэтгэл татам, санаачлагатай.',
+  ),
+  Zodiac(
+    imagePath: 'assets/leo.png',
+    name: 'Арслан',
+    dateRange: '7/23 - 8/22',
+    description: 'Арслангийн ордод төрсөн хүмүүс эрэлхийлэгч, тэргүүлэгч, өөртөө итгэлтэй байдаг.',
+  ),
+  Zodiac(
+    imagePath: 'assets/virgo.png',
+    name: 'Охин',
+    dateRange: '8/23 - 9/22',
+    description: 'Охины ордод төрсөн хүмүүс бүтээлч, нарийн төвөгтэй, сэтгэл санаа өндөр байдаг.',
+  ),
+  Zodiac(
+    imagePath: 'assets/libra.png',
+    name: 'Жинлүүр',
+    dateRange: '9/23 - 10/22',
+    description: 'Жинлүүрийн ордод төрсөн хүмүүс тэвчээртэй, шударга, харилцааны авьяастай.',
+  ),
+  Zodiac(
+    imagePath: 'assets/scorpio.png',
+    name: 'Нум',
+    dateRange: '10/23 - 11/21',
+    description: 'Нумын ордод төрсөн хүмүүс хүчтэй, хязгааргүй хүсэл тэмүүлэлтэй, амьдралын төлөө тэмцэгч байдаг.',
+  ),
+  Zodiac(
+    imagePath: 'assets/sagittarius.png',
+    name: 'Нум',
+    dateRange: '11/22 - 12/21',
+    description: 'Нумын ордод төрсөн хүмүүс тууштай, зоригтой, байгалийн урлагтай байдаг.',
+  ),
+  Zodiac(
+    imagePath: 'assets/capricorn.png',
+    name: 'Матар',
+    dateRange: '12/22 - 1/19',
+    description: 'Матарт төрсөн хүмүүс тууштай, хариуцлагатай, амжилттай ажиллахыг хүсдэг.',
+  ),
+  Zodiac(
+    imagePath: 'assets/aquarius.png',
+    name: 'Хумх',
+    dateRange: '1/20 - 2/18',
+    description: 'Хумхын ордод төрсөн хүмүүс илтгэлцлийн хүчтэй, шинжлэх ухаан болон урлагт ихээхэн сонирхолтой.',
+  ),
+  Zodiac(
+    imagePath: 'assets/pisces.png',
+    name: 'Загас',
+    dateRange: '2/19 - 3/20',
+    description: 'Загасны ордод төрсөн хүмүүс сайхан сэтгэлтэй, хурц сэтгэхүйтэй, уран бүтээлч байдаг.',
+  ),
+];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ордууд'),
+        backgroundColor: const Color(0xFFF4B0F9),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
+          ),
+          itemCount: zodiacs.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ZodiacDetailPage(zodiac: zodiacs[index]),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF0C0E2F),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Image.asset(zodiacs[index].imagePath),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    zodiacs[index].name,
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF4B0F9),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+      bottomNavigationBar: MyNavBarPage(
+        selectedIndex: 3,
+        onItemTapped: (index) {
+          final routes = ['/today', '/calendar', '/match', '/orduud', '/profile'];
+          if (index < routes.length) Navigator.pushNamed(context, routes[index]);
+        },
+      ),
+    );
+  }
+}
+
+class ZodiacDetailPage extends StatelessWidget {
+  final Zodiac zodiac;
+
+  const ZodiacDetailPage({required this.zodiac, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Зохицол'),
+        title: Text(zodiac.name),
         backgroundColor: const Color(0xFFF4B0F9),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            Image.asset(zodiac.imagePath),
+            const SizedBox(height: 16.0),
             Text(
-              '${zodiac1.name} болон ${zodiac2.name}',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFF4B0F9)), // Ягаан өнгө
+              zodiac.dateRange,
+              style: const TextStyle(fontSize: 18.0, color: Color(0xFFF4B0F9)),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 16.0),
             Text(
-              zodiac1.compatibility,
-              style: const TextStyle(fontSize: 16, color: Color(0xFFF4B0F9)), // Ягаан өнгө
-            ),
-            const SizedBox(height: 16),
-            Text(
-              zodiac2.compatibility,
-              style: const TextStyle(fontSize: 16, color: Color(0xFFF4B0F9)), // Ягаан өнгө
+              zodiac.description,
+              style: const TextStyle(fontSize: 16.0, color: Color(0xFFF4B0F9)),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
